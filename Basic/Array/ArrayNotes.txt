@@ -1,0 +1,66 @@
+Array — Java notes
+
+1) Definition
+- An array is a fixed-size contiguous collection of elements of the same type.
+- Indexing is zero-based. Accessing an invalid index throws ArrayIndexOutOfBoundsException.
+- Arrays for primitives store values; arrays for reference types store references (possibly null).
+
+2) Declaration
+- int[] a;
+- int a[]; // legal but less idiomatic
+- String[] s;
+
+3) Creation / Initialization
+- int[] a = new int[5];          // default values (0)
+- String[] s = new String[3];    // default values (null)
+- int[] b = {1, 2, 3};           // literal initialization
+- int[] c = new int[] {1, 2, 3}; // explicit new
+
+4) Length
+- Use array.length (no parentheses) to get the size.
+
+5) Common operations
+- Looping: for (int i = 0; i < a.length; i++) { ... }
+- Enhanced for: for (int v : a) { ... } (read-only index)
+- Assign/access: a[0] = 10; int x = a[1];
+
+6) Multidimensional arrays
+- int[][] mat = new int[3][4];          // rectangular
+- int[][] ragged = new int[3][]; ragged[0] = new int[2]; // jagged
+
+7) Utilities (java.util.Arrays)
+- Arrays.sort(a);
+- Arrays.equals(a, b);
+- Arrays.fill(a, value);
+- Arrays.copyOf(a, newLength);
+- Arrays.toString(a) and Arrays.deepToString(objArray)
+
+8) System-level copy
+- System.arraycopy(src, srcPos, dest, destPos, length); // fast native copy
+
+9) Common patterns
+- Resize (create new + copy): arr = Arrays.copyOf(arr, newSize);
+- Convert List<T> to T[]: list.toArray(new T[list.size()]);
+- Primitive arrays cannot hold null; reference arrays can.
+
+10) Pitfalls
+- Confusing array.length vs collection.size()
+- Forgetting bounds check -> runtime exception
+- Shallow copy when assigning reference: int[] b = a; (both refer same array)
+- Use Arrays.copyOf for a true copy
+
+11) Examples
+- Sum:
+    int sum = 0;
+    for (int v : a) sum += v;
+
+- Reverse:
+    for (int i = 0, j = a.length - 1; i < j; i++, j--) {
+            int tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+
+12) When to use alternatives
+- Use ArrayList or other Collections for dynamic-size, convenient APIs.
+- Use streams (Arrays.stream(a)) for functional-style processing.
+
+Keep arrays small and immutable in API when possible to avoid aliasing bugs.
